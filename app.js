@@ -38,6 +38,28 @@ class Bd {
         localStorage.setItem(id, JSON.stringify(d));
         localStorage.setItem('id', id);
     }
+
+    recuperarTodosRegistros() {
+        //array de despesas
+        let despesas = Array()
+
+        let id = localStorage.getItem('id');
+
+        //recuperar todas as despesas cadastradas em localStorage
+        for(let i=1; i <= id; i++) {
+            let despesa = localStorage.getItem(i);
+            
+            //verificação da existencia de índices pulados/excluídos
+
+            if(despesa === null) {
+                continue;
+            }
+
+            despesas.push(JSON.parse(despesa));
+        }
+
+        console.log(despesas)
+    }
 }
 
 let bd = new Bd();
@@ -79,4 +101,8 @@ function cadastrarDespesa() {
         document.getElementById('buttonModal').className = 'btn btn-danger';
         $('#modalRegistraDespesa').modal('show');
     }
+}
+
+function carregaListaDespesas() {
+    bd.recuperarTodosRegistros();
 }
