@@ -64,7 +64,7 @@ function cadastrarDespesa() {
     )
 
     if(despesa.validarDados()) {
-        //bd.gravar(despesa)
+        bd.gravar(despesa)
         document.getElementById('tituloModal').innerHTML = 'Registro gravado com sucesso!';
         document.getElementById('divTituloModal').className = 'modal-header text-success';
         document.getElementById('descricaoModal').innerHTML = 'A despesa foi cadastrada com sucesso.';
