@@ -58,7 +58,7 @@ class Bd {
             despesas.push(JSON.parse(despesa));
         }
 
-        console.log(despesas)
+        return despesas;
     }
 }
 
@@ -104,5 +104,38 @@ function cadastrarDespesa() {
 }
 
 function carregaListaDespesas() {
-    bd.recuperarTodosRegistros();
+
+    let despesas = Array();
+
+    despesas = bd.recuperarTodosRegistros();
+
+    //Selecionando o elemento tbody da tabela
+    let listaDespesas = document.getElementById('listaDespesas');
+
+    //Percorrendo o array despesas listando cada despesa de forma dinâmica
+    despesas.forEach(function(d) {
+        //criando a linha (tr)
+        let linha = listaDespesas.insertRow()
+
+        //Criando as colunas (td)
+        linha.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}`;
+
+        //ajustar o tipo
+        switch(d.tipo) {
+            case '1': d.tipo = 'Alimentação'
+                break
+            case '2': d.tipo = 'Educação'
+                break
+            case '3': d.tipo = 'Lazer'
+                break
+            case '4': d.tipo = 'Saúde'
+                break
+            case '5': d.tipo = 'Transporte'
+                break
+        }
+
+        linha.insertCell(1).innerHTML = d.tipo;
+        linha.insertCell(2).innerHTML = d.descricao;
+        linha.insertCell(3).innerHTML = d.valor;
+    });
 }
