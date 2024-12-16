@@ -47,7 +47,7 @@ class Bd {
 
         //recuperar todas as despesas cadastradas em localStorage
         for(let i=1; i <= id; i++) {
-            let despesa = localStorage.getItem(i);
+            let despesa = JSON.parse(localStorage.getItem(i));
             
             //verificação da existencia de índices pulados/excluídos
 
@@ -55,7 +55,8 @@ class Bd {
                 continue;
             }
 
-            despesas.push(JSON.parse(despesa));
+            despesa.id = i;
+            despesas.push(despesa);
         }
 
         return despesas;
@@ -96,6 +97,10 @@ class Bd {
 
         console.log(despesasFiltradas)
         return despesasFiltradas;
+    }
+
+    remover(id) {
+        localStorage.removeItem(id)
     }
 }
 
@@ -179,7 +184,17 @@ function carregaListaDespesas(despesas = Array(), filtro = false) {
         //criar botão de exclusão
         let btn = document.createElement('button');
         btn.className = 'btn btn-danger';
-        btn.innerHTML = "<i class='fas fa-times'></i>"
+        btn.innerHTML = "<i class='fas fa-times'></i>";
+        btn.id = `id_despesa_${d.id}`;
+        btn.onclick = function() {
+            //remover despesa
+            let id = this.id.replace('id_despesa_', '')
+
+            bd.remover(id);
+
+            window.location.reload();
+        }
+
         linha.insertCell(4).append(btn);
     });
 }
